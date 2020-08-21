@@ -2,6 +2,15 @@
     <head>
         <title>Uneji's Homepage</title>
         <link rel="stylesheet" href="unejistyle.css">
+        <script>
+            function greeting(name){
+                alert('hi ' + name);
+            }
+            function bgcolor(color){
+                alert(color);
+                document.body.style.backgroundColor = color;
+            }
+        </script>
 
 
     </head>
@@ -27,7 +36,8 @@
         <form action="">
             <fieldset>
             <legend>방명록</legend>
-            <label for="">방문자성명: </label> <input type="text"><br>
+            <label for="">배경색: </label><input type="color" name ='bg' onchage="bgcolor(this.value)">
+            <label for="">방문자성명: </label> <input name='irum' type="text"><br>
             <label for="">방명록 내용</label><input type="text"><br>
             <label for="">방명록 사용 아이디</label><input type="text"><br>
             <label for="">방명록 사용 비밀번호</label><input type="password"><br>
@@ -35,13 +45,13 @@
             <label for="">email</label><input type="email"><br>
             <select name="" id="">
 
-                <option value="">수학 과학</option>
+                <option value="">수학 과학</option>,m,mmmm,
                 <option value="">음악 미술</option>
                 <option value="">국어 영어</option>
                 <option value="">역사 사회</option>
                 <option value="">체육 실과</option>
             </select><br>
-            <button>완료</button>
+            <button onclick="greeting(irum.value); bgcolor(bg.value);">완료</button>
         </fieldset>
         </form>
 
