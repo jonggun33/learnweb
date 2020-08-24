@@ -1,0 +1,83 @@
+<html>
+
+<head>
+    <title>Uneji's Homepage</title>
+    <link rel="stylesheet" href="unejistyle.css">
+    <script>
+        function greeting(name) {
+            alert('hi ' + name);
+        }
+        function bgcolor(color) {
+            document.body.style.backgroundColor = color;
+        }
+    </script>
+
+
+</head>
+
+<body>
+    <iframe src="menu.html" width = "400" height ='200' title = 'menu' frameborder="0"></iframe>
+    <h1>Uneji Rules!!<input type="color" name='bg' value='#ffff0f' onchange="bgcolor(this.value)"></h1>
+    <h2>U R unwelcomed</h2>
+
+    <table>
+        <tr>
+            <td border: 10px sold blue><a href="제주 앗사 !.html" target="_blank">제주 앗사!</a></td>
+        </tr>
+        <tr>
+            <td><a href="boo.html">동대문 디자인 플라자 </a></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>아침: 위두랑으로 학교 숙제</td>
+        </tr>
+        <tr>
+            <td>점심: html 복습</td>
+        </tr>
+        <tr>
+            <td>점심: 현백에 가서 수학의 정석
+                5,6 단원 해결
+            </td>
+        </tr>
+        <tr>
+            <td>저녁: 집에 와서 html 강의를 듣는다
+            </td>
+        </tr>
+        <tr>
+            <td>밤: 누워서 해포 책을 읽고 잔다</td>
+        </tr>
+    </table>
+
+    <form action="">
+        <fieldset>
+            <legend>방명록</legend>
+
+            <label for="">방문자성명: </label> <input name='irum' type="text"><br>
+            <label for="">방명록 내용</label><input type="text"><br>
+            <label for="">방명록 사용 아이디</label><input type="text"><br>
+            <label for="">방명록 사용 비밀번호</label><input type="password"><br>
+            <label for="">전화번호</label><input type="password"><br>
+            <label for="">email</label><input type="email"><br>
+            <select name="" id="">
+
+                <option value="">수학 과학</option>,m,mmmm,
+                <option value="">음악 미술</option>
+                <option value="">국어 영어</option>
+                <option value="">역사 사회</option>
+                <option value="">체육 실과</option>
+            </select><br>
+            <button onclick="greeting(irum.value)">완료</button>
+        </fieldset>
+    </form>
+
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/gdZLi9oWNZg" frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </iframe>
+
+
+
+
+</body>
+
+</html>
