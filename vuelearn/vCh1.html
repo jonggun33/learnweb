@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="app"> <!-- v-if-->
+            <p v-if= "hours < 12">Good Moring</p>
+            <p v-if= "hours >=12 && hours < 18">Good Afternoon</p>
+            <p v-if= "hours >= 18">Good Evening</p>
+        </div>
+        <div id="app2">
+            <p> Hello, {{greetee}}</p> <!-- interpolation-->
+        </div>
+        <div id="app3">
+            <ul>
+                <li v-for="dog in dogs">{{dog}}</li>
+            </ul>
+        </div>
+        <p id = "app4">{{seconds}} seconds passed since...</p>
+        <div id="app5">
+            <input type="text" v-model="inputText">
+            <p>inputText: {{inputText}}</p>
+        </div>
+        <script>
+            new Vue({
+                el: '#app',
+                data: {
+                    hours: new Date().getHours()
+                }
+            });
+            new Vue({
+                el: '#app2',
+                data: {
+                    greetee: 'jonggun'
+                }
+            });
+            new Vue({
+                el: '#app3', 
+                data:{
+                    dogs:['shitzu', 'Shiba', 'chiwawa']
+                }
+            });
+            new Vue({
+                el: '#app4',
+                data: {
+                    seconds: 0
+                },
+                created(){
+                    setInterval(() => {
+                        this.seconds++;
+                    }, 1000);
+                }
+            });
+            new Vue({
+                el: '#app5',
+                data: {
+                    inputText: 'initial value'
+                }
+            });
+        </script>
+    </body>
+</html>
