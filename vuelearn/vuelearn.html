@@ -3,6 +3,17 @@
     <meta charset="utf-8" />
     <title>Vue Examples</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <style>
+      .v-enter-active,
+      .v-leave-active {
+        transition: 0.5s;
+      }
+      .v-enter,
+      .v-leave-to {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+    </style>
   </head>
   <body>
     <h1>Vue Examples 百見不如一打</h1>
@@ -45,6 +56,12 @@
       <hr />
       <p>forbidden words: {{forbidden}}</p>
       <textarea v-model="inputText"></textarea>
+
+      <hr />
+      <label><input type="checkbox" v-model="isOK" />Show now</label>
+      <transition>
+        <p v-if="isOK">Spoooooky</p>
+      </transition>
     </div>
 
     <script>
@@ -59,7 +76,8 @@
           price: 0,
           myText: "",
           forbidden: "stop",
-          inputText: ""
+          inputText: "",
+          isOK: true
         },
         methods: {
           increment: function () {
