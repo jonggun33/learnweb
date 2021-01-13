@@ -1,8 +1,38 @@
 <html>
   <head>
+    <meta charset="utf-8" />
     <title>Vue Examples</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
   </head>
   <body>
     <h1>Vue Examples 백견불여일타</h1>
+    <div id="app">
+      {{count}} times
+      <button @click="increment">+1</button>
+      <button @click="decrement">-1</button>
+      <hr />
+      <input type="checkbox" value="red" v-model="myChecks" />RED
+      <input type="checkbox" value="green" v-model="myChecks" />GREEN
+      <input type="checkbox" value="blue" v-model="myChecks" />BLUE
+      <br />
+      <ul>
+        <li v-for="item in myChecks">{{item}}</li>
+      </ul>
+    </div>
+
+    <script>
+      new Vue({
+        el: "#app",
+        data: { count: 0, myChecks: [] },
+        methods: {
+          increment: function () {
+            this.count++;
+          },
+          decrement: function () {
+            this.count--;
+          }
+        }
+      });
+    </script>
   </body>
 </html>
