@@ -41,6 +41,10 @@
       <p v-bind:style="{color: computedColor}">
         {{remaining}} more letters allowed.
       </p>
+
+      <hr />
+      <p>forbidden words: {{forbidden}}</p>
+      <textarea v-model="inputText"></textarea>
     </div>
 
     <script>
@@ -53,7 +57,9 @@
           timemessage: "You loaded this on " + new Date().toLocaleTimeString(),
           myName: "",
           price: 0,
-          myText: ""
+          myText: "",
+          forbidden: "stop",
+          inputText: ""
         },
         methods: {
           increment: function () {
@@ -79,6 +85,14 @@
               col = "red";
             }
             return col;
+          }
+        },
+        watch: {
+          inputText: function () {
+            var pos = this.inputText.indexOf(this.forbidden);
+            if (pos >= 0) {
+              alert(this.forbidden + " is not allowed");
+            }
           }
         }
       });
