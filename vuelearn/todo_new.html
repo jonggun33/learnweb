@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>To-Do in Vue</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <h1>To-Do in Vue</h1>
+    <div id="app">
+      <div v-for="todo in todos">
+        <label>
+          <input type="checkbox" v-model="todo.done" />
+          <span v-bind:class="{donestyle:todo.done}">{{todo.text}}</span>
+        </label>
+      </div>
+      <input
+        type="text"
+        v-model="addText"
+        v-on:keyup.enter="addToDo"
+        placeholder="new to-do"
+      />
+      <p><button v-on:onclick="cleanToDo">Clear Done</button></p>
+      <p>{{remaining}}/{{todos.length}} Completed</p>
+    </div>
+    <style>
+      .donestyle {
+        text-decoration: line-through;
+        color: lightgray;
+      }
+    </style>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          addText: "",
+          todos: [
+            { done: false, text: "go" },
+            { done: false, text: "buy" }
+          ]
+        },
+        methods: {
+          addToDo: function () {
+            if (this.addText) {
+              this.todos.push({ done: false, text: this.addText });
+              addText = "";
+            }
+          },
+          cleanToDo: function () {
+            this.todos = this.todos.filter(function (val) {
+              return val.done == false;
+            });
+          }
+        },
+        computed: {
+          remaining: function () {
+            return this.todos.filter(function (val) {
+              return val.done;
+            }).length;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
