@@ -4,7 +4,7 @@
     </head>
     <body>
         <div id = 'app'>
-            <greeting say-what="Salam!"></greeting>
+            <greeting  v-for="(item, index) in langs" v-bind:say-what='item'></greeting>
             <counter></counter>
         </div>
         <script>
@@ -34,6 +34,9 @@
             }
             new Vue({
                 el:'#app',
+                data: {
+                    langs:['Hi', 'Salam', 'gugu']
+                },
                 components:{
                     'greeting': Greeting,
                     'counter': Counter
