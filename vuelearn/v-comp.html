@@ -4,27 +4,42 @@
     </head>
     <body>
         <div id = 'app'>
-            <my-component></my-component>
-            <my-component></my-component>
-            <my-component></my-component>
+            <greeting></greeting>
+            <counter></counter>
         </div>
         <script>
-            var MyComponent = {
-                template: '<p class="my-comp"> Hello {{name}}</p>'
+            var Greeting = {
+                template: '<p class="my-comp"> Helllllo {{name}}</p>',
+                data: function(){
+                    return {
+                    name:'Escobar'
+                    }
+                }
+            }
+            var Counter = {
+                template: '<p class = "my-comp"> counter <button v-on:click="addOne"> add</button> {{count}} </p>',
+                data: function(){
+                    return {
+                        count: 0
+                    }
+                },
+                methods: {
+                    addOne: function(){
+                        this.count++;
+                    }
+                }
             }
             new Vue({
                 el:'#app',
-                data:{
-                    name:'jjj'
-                },
                 components:{
-                    'my-component': MyComponent
+                    'greeting': Greeting,
+                    'counter': Counter
                 }
             })
         </script>
         <style>
             .my-comp {
-                width: 100px;
+                width: 200px;
                 border: solid;
                 border-color: orange;
                 border-radius: 9px;
