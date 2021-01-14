@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <script src='https://cdn.jsdelivr.net/npm/vue/dist/vue.js'></script>
+    </head>
+    <body>
+        <div id = 'app'>
+            <my-component></my-component>
+            <my-component></my-component>
+            <my-component></my-component>
+        </div>
+        <script>
+            var MyComponent = {
+                template: '<p class="my-comp"> Hello {{name}}</p>'
+            }
+            new Vue({
+                el:'#app',
+                data:{
+                    name:'jjj'
+                },
+                components:{
+                    'my-component': MyComponent
+                }
+            })
+        </script>
+        <style>
+            .my-comp {
+                width: 100px;
+                border: solid;
+                border-color: orange;
+                border-radius: 9px;
+            }
+        </style>
+    </body>
+</html>
