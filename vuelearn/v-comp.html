@@ -4,12 +4,15 @@
     </head>
     <body>
         <div id = 'app'>
-            <greeting></greeting>
+            <greeting say-what="Salam!"></greeting>
             <counter></counter>
         </div>
         <script>
             var Greeting = {
-                template: '<p class="my-comp"> Helllllo {{name}}</p>',
+                template: '<p class="my-comp"> {{sayWhat}}    {{name}}</p>',
+                props: {
+                    sayWhat: String
+                },
                 data: function(){
                     return {
                     name:'Escobar'
