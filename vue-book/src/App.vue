@@ -5,7 +5,8 @@
     <router-link to="/about">About</router-link> |
     <router-link to="/databinding">Data Binding</router-link>|
     <router-link to="/eventhandling">Event Handling</router-link>|
-    <router-link to="/axiosbasic">Axios Basic</router-link>
+    <router-link to="/axiosbasic">Axios Basic</router-link>|
+    <router-link to="/intercomponent">Intercomponent</router-link>
   </div>
   <router-view/>
   </div>

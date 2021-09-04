@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import DataBinding from '../views/DataBinding.vue'
 import EventHandling from '../views/EventHandling.vue'
 import AxiosBasic from '../views/AxiosBasic.vue'
+import InterComponent from '../views/InterComponent.vue'
 
 const routes = [
   {
@@ -32,6 +33,11 @@ const routes = [
     path: '/axiosbasic',
     name: 'AxiosBasic',
     component: AxiosBasic
+  },
+  {
+    path: '/intercomponent',
+    name: 'InterComponent',
+    component: InterComponent
   }
 ]
 
