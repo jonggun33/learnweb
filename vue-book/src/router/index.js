@@ -1,6 +1,8 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import DataBinding from '../views/DataBinding.vue'
+import EventHandling from '../views/EventHandling.vue'
+import AxiosBasic from '../views/AxiosBasic.vue'
 
 const routes = [
   {
@@ -20,6 +22,16 @@ const routes = [
     path: '/databinding',
     name: 'DataBinding',
     component: DataBinding
+  },
+  {
+    path: '/eventhandling',
+    name: 'EventHandling',
+    component: EventHandling
+  },
+  {
+    path: '/axiosbasic',
+    name: 'AxiosBasic',
+    component: AxiosBasic
   }
 ]
 
