@@ -6,7 +6,9 @@
     <router-link to="/databinding">Data Binding</router-link>|
     <router-link to="/eventhandling">Event Handling</router-link>|
     <router-link to="/axiosbasic">Axios Basic</router-link>|
-    <router-link to="/intercomponent">Intercomponent</router-link>
+    <router-link to="/intercomponent">Intercomponent</router-link>|
+    <router-link to="/vuextodoadd">Vuex ToDo Add</router-link>|
+    <router-link to="/vuextodolist">Vuex ToDo List</router-link>
   </div>
   <router-view/>
   </div>

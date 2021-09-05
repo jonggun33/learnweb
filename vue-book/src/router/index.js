@@ -4,6 +4,8 @@ import DataBinding from '../views/DataBinding.vue'
 import EventHandling from '../views/EventHandling.vue'
 import AxiosBasic from '../views/AxiosBasic.vue'
 import InterComponent from '../views/InterComponent.vue'
+import VuexToDoAdd from '../views/VuexToDoAdd.vue'
+import VuexToDoList from '../views/VuexToDoList.vue'
 
 const routes = [
   {
@@ -38,6 +40,16 @@ const routes = [
     path: '/intercomponent',
     name: 'InterComponent',
     component: InterComponent
+  },
+  {
+    path: '/vuextodoadd',
+    name: 'VuexToDoAdd',
+    component: VuexToDoAdd
+  },
+  {
+    path: '/vuextodolist',
+    name: 'VuexToDoList',
+    component: VuexToDoList
   }
 ]
 
