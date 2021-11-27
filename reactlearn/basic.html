@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello React</title>
+    <meta charset='utf-8'>
+</head>
+<body>
+    <div id = 'app'></div>
+    <div id = 'app2'></div>
+    <script src = 'react.js'></script>
+    <script src = 'react-dom.js'></script>
+    <script src = 'babel.js'></script>
+    <script>
+        ReactDOM.render(
+            React.createElement('H1', {id:'mytitle'} , 'Hello React'),
+            document.getElementById('app')
+        );
+    </script>
+    <!--JSX below-->
+    <script type = 'text/babel'>
+        ReactDOM.render(
+            <h1 id = 'kk'> Hello <em>wonderful</em> React</h1>,
+            document.getElementById('app2')
+        );
+    </script>
+</body>
+</html>
