@@ -10,17 +10,15 @@
     <script src = 'lib/react.js'></script>
     <script src = 'lib/react-dom.js'></script>
     <script src = 'lib/babel.js'></script>
-    <script>
-        ReactDOM.render(
-            React.createElement('H1', {id:'mytitle'} , 'Hello React'),
-            document.getElementById('app')
-        );
+    <script type='text/babel'>
+        const MyComponent = function(){
+            return <span>I am so customed</span>
+        };
     </script>
-    <!--JSX below-->
-    <script type = 'text/babel'>
+    <script type='text/babel'>
         ReactDOM.render(
-            <h1 id = 'kk'> Hello <em>wonderful</em> React</h1>,
-            document.getElementById('app2')
+            <MyComponent />,
+            document.getElementById('app')
         );
     </script>
 </body>
