@@ -14,12 +14,18 @@
         const MyComponent = function(){
             return <span>I am so customed</span>
         };
-    </script>
-    <script type='text/babel'>
+        const Greeting = function({name}){
+            return <span>Hello <em>{name}</em></span>;
+        }
         ReactDOM.render(
             <MyComponent />,
             document.getElementById('app')
         );
+        ReactDOM.render(
+            <Greeting name='gim' />,
+            document.getElementById('app2')
+
+        )
     </script>
 </body>
 </html>
