@@ -46,7 +46,7 @@
 
 		//var base = new L.Shapefile('world-administrative-boundaries.zip');
 		//base.addTo(m)
-		var shpfile = new L.Shapefile('world-administrative-boundaries.zip', {
+		var shpfile = new L.Shapefile('congress.zip', {
 			onEachFeature: function(feature, layer) {
 				if (feature.properties) {
 					layer.bindPopup(Object.keys(feature.properties).map(function(k) {
