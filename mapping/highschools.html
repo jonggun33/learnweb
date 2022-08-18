@@ -20,15 +20,18 @@
                 maxZoom: 19,
                 attribution: '@ OpenStreetMap'
             });
+            var baseLayer=L.layerGroup();
+            var snu=L.layerGroup();
+            var med=L.layerGroup();
             var map = L.map('map', {
                 zoom: 7,
                 center: [37, 127],
-                layers: [osm],
+                layers: [osm,snu,med]
             });
             $.getJSON('hschools.json', function (schools) {
                 $.each(schools, function(i, school) {
                     var marker = L.marker([school.geometry.location.lat, school.geometry.location.lng]);
-                    marker.addTo(map);
+                    marker.addTo(snu);
                     var s = String(); 
                     s += "<B>" + school.school.rank+ school.school.name + "</B>";
                     s += "<div>" + school.school.kind + "</div>";
@@ -36,6 +39,25 @@
                     marker.bindTooltip(s).openTooltip();
                 });
             });
+            $.getJSON('med.json', function (schools) {
+                $.each(schools, function(i, school) {
+                    var marker = L.marker([school.lat, school.lng]);
+                    marker.addTo(med);
+                    var s = String(); 
+                    s += "<div>" + school.name + "</div>";
+                    s += "<div>" + school.medical + "</div>";
+                    marker.bindTooltip(s).openTooltip();
+                });
+            });
+            var baseMaps ={
+                "OpenStreetMap": osm
+            };
+            var overlayMaps = {
+                "SNU": snu,
+                "Med": med
+            }
+            var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+            
         }
     </script>
 </head>
