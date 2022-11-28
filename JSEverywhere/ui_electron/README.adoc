@@ -1,0 +1,4 @@
+= ui_electron
+
+[source, bash]
+npx create-electron-app ui_electron
