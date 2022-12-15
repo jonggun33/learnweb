@@ -4,6 +4,8 @@ on:
     branches: [master]
     paths:
       - 'todo-react/**'
+      - 'mapping/**'
+      - 'ji/**'
 permissions:
   contents: write
 jobs:
@@ -18,18 +20,32 @@ jobs:
         uses: actions/setup-node@v3
         with: 
           node-version: ${{matrix.node-version }}
-      - name: build
-        id: build
+      - name: todo-react build
+        id: todoreactbuild
         working-directory: ./todo-react
         run: |
           npm ci
           npm run build
           cd build
           find "$(pwd)"
-      - name: commit
-        if: steps.build.outcome == 'success'
+      - name: todoreactcommit
+        if: steps.todoreactbuild.outcome == 'success'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
           publish_dir: ./todo-react/build
           keep_files: true
+      - name: mapping commit
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          publish_dir: ./mapping
+          keep_files: true
+      
+      - name: ji commit
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          publish_dir: ./ji
+          keep_files: true
+          
