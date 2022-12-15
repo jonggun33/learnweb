@@ -1,4 +1,4 @@
-name: Build and Deploy React Application
+name: Build and Deploy todo-react
 on:
   push:
     branches: [master]
