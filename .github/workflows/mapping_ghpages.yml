@@ -1,0 +1,22 @@
+name: Build and Deploy mapping
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'mapping/**'
+permissions:
+  contents: write
+jobs:
+  build2commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: mapping commit
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          publish_dir: ./mapping
+          destination_dir: mapping
+          keep_files: false
+      
