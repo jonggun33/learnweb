@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Factories</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css' rel='stylesheet' />
+    <link href="https://api.mapbox.com/mapbox-assembly/v1.3.0/assembly.min.css" rel="stylesheet" />
+    <script src="https://api.mapbox.com/mapbox-assembly/v1.3.0/assembly.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css" type="text/css" />
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css" type="text/css">
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        #buttons {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .button {
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+            width: 20%;
+            padding: 8px;
+            border-radius: 3px;
+            margin-top: 10px;
+            font-size: 12px;
+            text-align: center;
+            color: #fff;
+            background: #ee8a65;
+            font-family: sans-serif;
+            font-weight: bold;
+        }
+
+        #menu {
+            position: absolute;
+            background: #efefef;
+            padding: 10px;
+            font-family: 'Open Sans', sans-serif;
+        }
+    </style>
+    <script>
+        $(function () {
+            setMap();
+        });
+        function setMap() {
+
+            mapboxgl.accessToken = 'pk.eyJ1Ijoiam9uZ2d1biIsImEiOiJjbDQ2ZTBqOHowMGo4M2NvMDN6bGRuMzlsIn0.FjEF9k7wc67y0QVnBNEBlQ';
+            const map = new mapboxgl.Map({
+                container: 'map', // container ID
+                // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+                style: 'mapbox://styles/jonggun/cl4c93k1c001915r55wcxm02x', // style URL
+                //style: 'mapbox://styles/mapbox/light-v10',
+                center: [127, 35], // starting position [lng, lat]
+                zoom: 6, // starting zoom
+                projection: 'globe' // display the map as a 3D globe
+            });
+
+            map.on('style.load', () => {
+                map.setFog({}); // Set the default atmosphere style
+            });
+            $("#buttons").click(function (e) {
+                const language = e.target.id.substr('button-'.length);
+                // Use setLayoutProperty to set the value of a layout property in a style layer.
+                // The three arguments are the id of the layer, the name of the layout property,
+                // and the new property value.
+                map.setLayoutProperty('country-label', 'text-field', [
+                    'get',
+                    `name_${language}`
+                ]);
+            });
+            const layerList = document.getElementById('menu');
+            const inputs = layerList.getElementsByTagName('input');
+
+            for (const input of inputs) {
+                input.onclick = (layer) => {
+                    const layerId = layer.target.id;
+                    map.setStyle('mapbox://styles/mapbox/' + layerId);
+                };
+            }
+
+            const params = document.getElementById('params');
+            const urlBase = 'https://api.mapbox.com/isochrone/v1/mapbox/';
+            var lng = 127.07;
+            var lat = 37.211;
+            let profile = 'cycling';
+            let minutes = 10;
+            const marker = new mapboxgl.Marker({
+                'color': '#314ccd',
+                draggable: true
+            });
+            var lngLat = {
+                lng: lng,
+                lat: lat
+            };
+            async function getIso() {
+                const query = await fetch(
+                    `${urlBase}${profile}/${lng},${lat}?contours_minutes=${minutes}&polygons=true&access_token=${mapboxgl.accessToken}`,
+                    { method: 'GET' }
+                );
+                const data = await query.json();
+                // Set the 'iso' source's data to what's returned by the API query
+                map.getSource('iso').setData(data);
+            }
+            params.addEventListener('change', (event) => {
+                if (event.target.name === 'profile') {
+                    profile = event.target.value;
+                } else if (event.target.name === 'duration') {
+                    minutes = event.target.value;
+                }
+                getIso();
+            });
+
+            map.on('load', () => {
+                // When the map loads, add the source and layer
+                map.addSource('iso', {
+                    type: 'geojson',
+                    data: {
+                        'type': 'FeatureCollection',
+                        'features': []
+                    }
+                });
+
+                map.addLayer(
+                    {
+                        'id': 'isoLayer',
+                        'type': 'fill',
+                        'source': 'iso',
+                        'layout': {},
+                        'paint': {
+                            'fill-color': '#5a3fc0',
+                            'fill-opacity': 0.3
+                        }
+                    },
+                    'poi-label'
+                );
+
+                // Initialize the marker at the query coordinates
+                marker.setLngLat(lngLat).addTo(map);
+                marker.on('dragend', function(e) {
+                    //coordinates.innerHTML = `Longitude: ${lngLat.lng}<br />Latitude: ${lngLat.lat}`;
+                    lng= marker.getLngLat().lng;
+                    lat = marker.getLngLat().lat;
+                    console.log(lng, lat);
+                    getIso()
+
+                });
+
+                // Make the API call
+                getIso();
+            });
+            const geocoder = new MapboxGeocoder({
+                accessToken: mapboxgl.accessToken,
+                mapboxgl: mapboxgl
+            });
+
+            map.addControl(geocoder, 'top-right');
+            map.addControl(
+                new MapboxDirections({ accessToken: mapboxgl.accessToken }),
+                'bottom-right'
+            );
+        }
+    </script>
+</head>
+
+<body>
+
+    <div id="map"></div>
+    <ul id="buttons">
+        <li id="button-ko" class="button">Korean</li>
+        <li id="button-en" class="button">English</li>
+        <li id="button-zh-Hans" class="button">Chinese</li>
+        <li id="button-es" class="button">Spanish</li>
+    </ul>
+    <div id="menu">
+        <input id="satellite-v9" type="radio" name="rtoggle" value="satellite" checked="checked">
+        <!-- See a list of Mapbox-hosted public styles at -->
+        <!-- https://docs.mapbox.com/api/maps/styles/#mapbox-styles -->
+        <label for="satellite-v9">satellite</label>
+        <input id="light-v10" type="radio" name="rtoggle" value="light">
+        <label for="light-v10">light</label>
+        <input id="dark-v10" type="radio" name="rtoggle" value="dark">
+        <label for="dark-v10">dark</label>
+        <input id="streets-v11" type="radio" name="rtoggle" value="streets">
+        <label for="streets-v11">streets</label>
+        <input id="outdoors-v11" type="radio" name="rtoggle" value="outdoors">
+        <label for="outdoors-v11">outdoors</label>
+    </div>
+    <div class="absolute fl my24 mx24 py24 px24 bg-gray-faint round">
+        <form id="params">
+            <h4 class="txt-m txt-bold mb6">Choose a travel mode:</h4>
+            <div class="mb12 mr12 toggle-group align-center">
+                <label class="toggle-container">
+                    <input name="profile" type="radio" value="walking" />
+                    <div class="toggle toggle--active-null toggle--null">Walking</div>
+                </label>
+                <label class="toggle-container">
+                    <input name="profile" type="radio" value="cycling" checked />
+                    <div class="toggle toggle--active-null toggle--null">Cycling</div>
+                </label>
+                <label class="toggle-container">
+                    <input name="profile" type="radio" value="driving" />
+                    <div class="toggle toggle--active-null toggle--null">Driving</div>
+                </label>
+            </div>
+            <h4 class="txt-m txt-bold mb6">Choose a maximum duration:</h4>
+            <div class="mb12 mr12 toggle-group align-center">
+                <label class="toggle-container">
+                    <input name="duration" type="radio" value="10" checked />
+                    <div class="toggle toggle--active-null toggle--null">10 min</div>
+                </label>
+                <label class="toggle-container">
+                    <input name="duration" type="radio" value="20" />
+                    <div class="toggle toggle--active-null toggle--null">20 min</div>
+                </label>
+                <label class="toggle-container">
+                    <input name="duration" type="radio" value="30" />
+                    <div class="toggle toggle--active-null toggle--null">30 min</div>
+                </label>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
