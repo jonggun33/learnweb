@@ -22,7 +22,7 @@ jobs:
         id: build
         working-directory: ./todo-react
         run: |
-          npm ci
+          npm install
           npm run build
           cd build
           find "$(pwd)"
