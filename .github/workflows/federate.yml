@@ -27,7 +27,7 @@ jobs:
           github_token: ${{secrets.GITHUB_TOKEN}}
           publish_dir: ./mapping
           destination_dir: mapping
-          keep_files: true
+          keep_files: false
       
       - name: ji commit
         uses: peaceiris/actions-gh-pages@v3
@@ -35,7 +35,7 @@ jobs:
           github_token: ${{secrets.GITHUB_TOKEN}}
           publish_dir: ./ji
           destination_dir: ji
-          keep_files: true
+          keep_files: false
           
       - name: todo-react build
         id: todoreactbuild
