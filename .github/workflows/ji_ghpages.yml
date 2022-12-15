@@ -1,0 +1,23 @@
+name: Build and Deploy JI
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'ji/**'
+permissions:
+  contents: write
+jobs:
+  build2commit:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+    
+      - name: ji commit
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          publish_dir: ./ji
+          destination_dir: ji
+          keep_files: false
+          
