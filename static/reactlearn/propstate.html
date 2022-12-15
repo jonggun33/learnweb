@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello React</title>
+    <meta charset='utf-8'>
+</head>
+<body>
+    <div id = 'app'></div>
+    <div id = 'app2'></div>
+    <script src = 'lib/react.js'></script>
+    <script src = 'lib/react-dom.js'></script>
+    <script src = 'lib/babel.js'></script>
+    <script type='text/babel'>
+        const MyComponent = function(){
+            return <span>I am so customed</span>
+        };
+        const Greeting = function({name}){
+            return <span>Hello <em>{name}</em></span>;
+        }
+        ReactDOM.render(
+            <MyComponent />,
+            document.getElementById('app')
+        );
+        ReactDOM.render(
+            <Greeting name='gim' />,
+            document.getElementById('app2')
+
+        )
+    </script>
+</body>
+</html>

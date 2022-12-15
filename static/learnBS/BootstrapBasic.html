@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang='ko'>
+
+<head>
+    <meta charset="utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+        crossorigin="anonymous"></script>
+
+    <h1>Layout</h1>
+
+    <div class="container">
+	    <div class="row">
+		    <div class='col-1'>aaa</div>
+		    <div class='col-11 border display-flex'><input width="100%" style="min-width: 100%" type='text'></input></div>
+	    </div>
+	</div>
+    <div class='container-md border'>
+        <div class="row justify-content-lg-center align-items-start gx-5">
+            <div class='col-2 bg-light border align-items-start text-start p-3'>one</div>
+            <div class='col-lg-auto bg-gray border text-center m-3 shadow'>-size determined by its content-</div>
+            <div class='col-2 bg-dark border text-white text-end'>three</div>
+
+        </div>
+    </div>
+    <br>
+    <div class="container px-4 border w-50">
+        <div class="row gx-5">
+            <div class="col">
+                <div class="p-3 m-3 border bg-light fs-1">Custom column padding</div>
+            </div>
+            <div class="col">
+                <div class="p-3 m-3 border bg-light text-uppercase">Custom column padding</div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <h1>Components</h1>
+    <div class='container justify-content-lg-center'>
+        <span class='badge bg-primary fs-2'>Primary</span>
+        <span class='badge bg-danger'>Danger</span>
+        <br><hr>
+        <div class='card border-primary mb-3' style='max-width: 18rem;'>
+            <div class='card-header'>Header</div>
+            <div class='card-body'>
+                <h5 class='card-title'>Primary card Title</h5>
+                <p class='card-text'>sjdfahl asdjfha skdjfh askjdf hkasdjfh kasdj fhjkasd hksdja fhkdsj fhlkajshf kajsh
+                    fkjsdf klsdf hklsdja hakjd </p> 
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

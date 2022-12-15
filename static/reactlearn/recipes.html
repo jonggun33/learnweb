@@ -1,0 +1,96 @@
+<html>
+
+<head>
+    <meta charset='utf-8'>
+
+</head>
+
+<body>
+    <h1>Every recipe of the world</h1>
+    <div id='recipes'></div>
+    <script src='lib/react.js'></script>
+    <script src='lib/react-dom.js'></script>
+    <script src='lib/babel.js'></script>
+    <script crossorigin src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+    <script type='text/babel'>
+        const data = [
+            {
+                name: 'omelette',
+                ingredients: [
+                    'eggs',
+                    'olive oil',
+                    'cheese'
+                ],
+                instructions: [
+                    'heat oil',
+                    'put eggs',
+                    'wrap cheese'
+                ]
+            },
+            {
+                name: 'pizza',
+                ingredients: [
+                    'flour',
+                    'tomato paste',
+                    'ham'
+                ],
+                instructions: [
+                    'make dough',
+                    'put toppings',
+                    'heat for 15 mins'
+                ]
+            }
+        ];
+
+        const Ingredients = ({ data = [] }) => (
+            <div>
+                <ul>
+                    {data.map((ingredient, i) => (
+                        <li key={i}>{ingredient}</li>
+                    ))}
+                </ul>
+            </div>
+        )
+
+        const Instructions = ({ data } = []) => (
+            <div>
+                <ol>
+                    {data.map((instruction, i) => (
+                        <li key={i}>{instruction}</li>
+                    ))}
+                </ol>
+            </div>
+        )
+
+        function Recipe({ name, ingredients, instructions }) {
+            return (
+                <div>
+                    <h1>{name}</h1>
+                    <Ingredients data={ingredients} />
+                    <Instructions data={instructions} />
+                </div>
+            )
+
+        }
+
+        function Recipes({ title, data }) {
+            return (
+                <article>
+                    <h1>{title}</h1>
+                    <div className="recs">
+                        {data.map((recipe, i) => (
+                            <Recipe key={i} {...recipe}/>
+                        ))}
+                    </div>
+                </article>
+            )
+        }
+
+        ReactDOM.render(
+            <Recipes title='what a recipe!!!' data={data} />,
+            document.getElementById('recipes')
+        );
+    </script>
+</body>
+
+</html>

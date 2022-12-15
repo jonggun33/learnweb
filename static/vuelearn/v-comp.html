@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <script src='https://cdn.jsdelivr.net/npm/vue/dist/vue.js'></script>
+    </head>
+    <body>
+        <div id = 'app'>
+            <greeting  v-for="(item, index) in langs" v-bind:say-what='item'></greeting>
+            <counter></counter>
+        </div>
+        <hr>
+        <div id = 'jf'>
+            <input type="file" @change='onFileChange'>
+            <p>JSON File Read: {{loadData}}</p>
+        </div>
+        <script>
+            var Greeting = {
+                template: '<p class="my-comp"> {{sayWhat}}    {{name}}</p>',
+                props: {
+                    sayWhat: String
+                },
+                data: function(){
+                    return {
+                    name:'Escobar'
+                    }
+                }
+            }
+            var Counter = {
+                template: '<p class = "my-comp"> counter <button v-on:click="addOne"> add</button> {{count}} </p>',
+                data: function(){
+                    return {
+                        count: 0
+                    }
+                },
+                methods: {
+                    addOne: function(){
+                        this.count++;
+                    }
+                }
+            }
+            new Vue({
+                el:'#app',
+                data: {
+                    langs:['Hi', 'Salam', 'gugu']
+                },
+                components:{
+                    'greeting': Greeting,
+                    'counter': Counter
+                }
+            })
+        </script>
+        <script>
+            new Vue({
+                el: '#jf',
+                data: {
+                    loadData: ''
+                },
+                methods: {
+                    onFileChange: function(e){
+                        file = e.target.files[0];
+                        if(file){
+                            var reader = new FileReader();
+                            var vm = this;
+                            reader.onload = function(e){
+                                json = JSON.parse(e.target.result);
+                                vm.loadData = json;
+                            }
+                            reader.readAsText(file);
+                        }
+                    }
+                }
+            })
+        </script>
+        <style>
+            .my-comp {
+                width: 200px;
+                border: solid;
+                border-color: orange;
+                border-radius: 9px;
+            }
+        </style>
+    </body>
+</html>
