@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/learnweb/todo-react/static/css/main.0ac7441f.css",
+    "main.js": "/learnweb/todo-react/static/js/main.dea6aac2.js",
+    "index.html": "/learnweb/todo-react/index.html",
+    "main.0ac7441f.css.map": "/learnweb/todo-react/static/css/main.0ac7441f.css.map",
+    "main.dea6aac2.js.map": "/learnweb/todo-react/static/js/main.dea6aac2.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0ac7441f.css",
+    "static/js/main.dea6aac2.js"
+  ]
+}
