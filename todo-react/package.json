@@ -1,6 +1,7 @@
 {
   "name": "todo-react",
   "version": "0.1.0",
+  "homepage": "https://jonggun33.github.io/learnweb/todo-react",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.15.1",
