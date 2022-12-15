@@ -1,0 +1,35 @@
+name: Build and Deploy React Application
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'todo-react/**'
+permissions:
+  contents: write
+jobs:
+  build2commit:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
+      - uses: actions/checkout@v3
+      - name: used Node.js ${{matrix.node-version}}
+        uses: actions/setup-node@v3
+        with: 
+          node-version: ${{matrix.node-version }}
+      - name: build
+        id: build
+        working-directory: ./todo-react
+        run: |
+          npm ci
+          npm run build
+          cd build
+          find "$(pwd)"
+      - name: commit
+        if: steps.build.outcome == 'success'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          publish_dir: ./todo-react/build
+          keep_files: true
