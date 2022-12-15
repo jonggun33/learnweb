@@ -26,6 +26,7 @@ jobs:
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
           publish_dir: ./mapping
+          destination_dir: mapping
           keep_files: true
       
       - name: ji commit
@@ -33,6 +34,7 @@ jobs:
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
           publish_dir: ./ji
+          destination_dir: ji
           keep_files: true
           
       - name: todo-react build
@@ -49,5 +51,6 @@ jobs:
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
           publish_dir: ./todo-react/build
+          destination_dir: todo-react
           keep_files: true
           
