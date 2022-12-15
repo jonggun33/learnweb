@@ -36,7 +36,6 @@ function FormTodo({addTodo}){
   );
 }
 
-
 function App() {
   var loadedTodos =JSON.parse(localStorage.getItem('todos'));
   if(loadedTodos ==null) loadedTodos = [{text:"nothing", isDone:false}];
