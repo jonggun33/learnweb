@@ -1,0 +1,23 @@
+name: Build and Deploy static
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'static/**'
+permissions:
+  contents: write
+jobs:
+  build2commit:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+    
+      - name: static commit
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          publish_dir: ./static
+          destination_dir: static
+          keep_files: false
+          
