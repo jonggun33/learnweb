@@ -59,7 +59,6 @@
             setMap();
         });
         function setMap() {
-
             mapboxgl.accessToken = 'pk.eyJ1Ijoiam9uZ2d1biIsImEiOiJjbDQ2ZTBqOHowMGo4M2NvMDN6bGRuMzlsIn0.FjEF9k7wc67y0QVnBNEBlQ';
             const map = new mapboxgl.Map({
                 container: 'map', // container ID
@@ -79,10 +78,22 @@
                 // Use setLayoutProperty to set the value of a layout property in a style layer.
                 // The three arguments are the id of the layer, the name of the layout property,
                 // and the new property value.
-                map.setLayoutProperty('country-label', 'text-field', [
-                    'get',
-                    `name_${language}`
-                ]);
+                // Assuming you have a Mapbox GL JS map object named 'map'
+  
+
+// Get the list of layers
+const layers = map.getStyle().layers;
+
+// Iterate over the layers
+layers.forEach(layer => {
+  console.log(layer.id);
+  // Check if the layer is a label layer (adjust the condition as per your use case)
+  if (layer.type === 'symbol' && layer.layout['text-field']) {
+    // Update the 'text-field' property to change the language
+    map.setLayoutProperty(layer.id, 'text-field', ['get',`name_${language}`]); // 'name_fr' represents the French label field
+  }
+});
+
             });
             const layerList = document.getElementById('menu');
             const inputs = layerList.getElementsByTagName('input');
@@ -179,7 +190,6 @@
 </head>
 
 <body>
-
     <div id="map"></div>
     <ul id="buttons">
         <li id="button-ko" class="button">Korean</li>
