@@ -65,27 +65,6 @@
         width: 100%;
       }
 
-      #buttons {
-        width: 90%;
-        margin: 0 auto;
-      }
-
-      .button {
-        display: inline-block;
-        position: relative;
-        cursor: pointer;
-        width: 20%;
-        padding: 8px;
-        border-radius: 3px;
-        margin-top: 10px;
-        font-size: 12px;
-        text-align: center;
-        color: #fff;
-        background: #ee8a65;
-        font-family: sans-serif;
-        font-weight: bold;
-      }
-
       #menu {
         position: absolute;
         background: #efefef;
@@ -98,11 +77,12 @@
         setMap();
         var dialog = $(".dialog");
         var icon = $(".dialog-icon");
-        console.log("initiated" + dialog.html() + icon.html());
-        dialog.on("focusout", () => {
+        //Jconsole.log("initiated" + dialog.html() + icon.html());
+        $("#apply").click(() => {
           console.log("dialog losing focus");
           dialog.hide();
           icon.show();
+          setMap();
         });
 
         icon.click(function (e) {
@@ -113,6 +93,7 @@
         });
       });
       function setMap() {
+        console.log("setting the map... ");
         mapboxgl.accessToken =
           "pk.eyJ1Ijoiam9uZ2d1biIsImEiOiJjbDQ2ZTBqOHowMGo4M2NvMDN6bGRuMzlsIn0.FjEF9k7wc67y0QVnBNEBlQ";
         const map = new mapboxgl.Map({
@@ -128,29 +109,45 @@
         map.on("style.load", () => {
           map.setFog({}); // Set the default atmosphere style
         });
-        $("#buttons").click(function (e) {
-          const language = e.target.id.substr("button-".length);
-
+        $("#language").change((e) => {
+          label_lang = e.target.id;
+          console.log(label_lang);
           const layers = map.getStyle().layers;
           layers.forEach((layer) => {
-            console.log(layer.id);
             if (layer.type === "symbol" && layer.layout["text-field"]) {
               map.setLayoutProperty(layer.id, "text-field", [
                 "get",
-                `name_${language}`,
+                `name_${label_lang}`,
               ]);
             }
           });
         });
-        const layerList = document.getElementById("menu");
-        const inputs = layerList.getElementsByTagName("input");
+        //$("#language")
+        //  .find("input")
+        //  .forEach((lang) => {
+        //    lang.onClick = (e) => {
+        //      label_lang = e.target.id;
+        //      console.log(label_lang);
+        //      const layers = map.getStyle().layers;
+        //      layers.forEach((layer) => {
+        //        if (layer.type === "symbol" && layer.layout["text-field"]) {
+        //          map.setLayoutProperty(layer.id, "text-field", [
+        //            "get",
+        //            `name_${language}`,
+        //          ]);
+        //        }
+        //      });
+        //    };
+        //  });
+        //const layerList = document.getElementById("menu");
+        //const inputs = layerList.getElementsByTagName("input");
 
-        for (const input of inputs) {
-          input.onclick = (layer) => {
-            const layerId = layer.target.id;
-            map.setStyle("mapbox://styles/mapbox/" + layerId);
-          };
-        }
+        //for (const input of inputs) {
+        //  input.onclick = (e) => {
+        //    const layerId = e.target.id;
+        //    map.setStyle("mapbox://styles/mapbox/" + layerId);
+        //  };
+        //}
 
         const params = document.getElementById("params");
         const urlBase = "https://api.mapbox.com/isochrone/v1/mapbox/";
@@ -223,7 +220,14 @@
           mapboxgl: mapboxgl,
         });
 
-        map.addControl(geocoder, "top-right");
+        var bGeocoding = $("#geocoding").is(":checked");
+        console.log(bGeocoding);
+        if (bGeocoding === true) {
+          map.addControl(geocoder, "top-right");
+        } else if (map.hasControl(geocoder)) {
+          console.log("removing geocoder");
+          map.removeControl(geocoder);
+        }
         map.addControl(
           new MapboxDirections({ accessToken: mapboxgl.accessToken }),
           "bottom-right"
@@ -234,32 +238,6 @@
 
   <body>
     <div id="map"></div>
-    <ul id="buttons">
-      <li id="button-ko" class="button">Korean</li>
-      <li id="button-en" class="button">English</li>
-      <li id="button-zh-Hans" class="button">Chinese</li>
-      <li id="button-es" class="button">Spanish</li>
-    </ul>
-    <div id="menu">
-      <input
-        id="satellite-v9"
-        type="radio"
-        name="rtoggle"
-        value="satellite"
-        checked="checked"
-      />
-      <!-- See a list of Mapbox-hosted public styles at -->
-      <!-- https://docs.mapbox.com/api/maps/styles/#mapbox-styles -->
-      <label for="satellite-v9">satellite</label>
-      <input id="light-v10" type="radio" name="rtoggle" value="light" />
-      <label for="light-v10">light</label>
-      <input id="dark-v10" type="radio" name="rtoggle" value="dark" />
-      <label for="dark-v10">dark</label>
-      <input id="streets-v11" type="radio" name="rtoggle" value="streets" />
-      <label for="streets-v11">streets</label>
-      <input id="outdoors-v11" type="radio" name="rtoggle" value="outdoors" />
-      <label for="outdoors-v11">outdoors</label>
-    </div>
     <div class="absolute fl my24 mx24 py24 px24 bg-gray-faint round">
       <form id="params">
         <h4 class="txt-m txt-bold mb6">Choose a travel mode:</h4>
@@ -296,12 +274,26 @@
     </div>
     <div class="dialog" id="gg">
       <div class="dialog-content">
-        <h3>Hello</h3>
-        <input type="text" />
+        <div id="language">
+          <input id="ko" type="radio" name="rtoggle" checked="checked" />
+          <label for="ko">Korean</label>
+          <input id="en" type="radio" name="rtoggle" />
+          <label for="en">English</label>
+          <input id="zh-Hans" type="radio" name="rtoggle" />
+          <label for="zh-Hans">Chinese</label>
+          <input id="es" type="radio" name="rtoggle" />
+          <label for="es">Spanish</label>
+        </div>
+        <div>
+          <input type="checkbox" id="geocoding" /><label for="geocoding"
+            >Geo Coding</label
+          >
+        </div>
       </div>
+      <button id="apply">Apply</button>
     </div>
     <div class="dialog-icon">
-      <i class="fa fa-comments">icon</i>
+      <i class="fa fa-comments">i</i>
     </div>
   </body>
 </html>
