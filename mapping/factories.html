@@ -27,12 +27,22 @@
     />
 
     <style>
+      button {
+        border: 1px solid black;
+      }
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
       .dialog {
         position: fixed;
-        top: 50px;
+        bottom: 50px;
         left: 20px;
-        width: 300px;
+        width: 400px;
         height: 200px;
+        background-color: yellow;
         border: 1px solid #ccc;
         z-index: 9999;
       }
@@ -43,13 +53,15 @@
 
       .dialog-icon {
         position: fixed;
-        top: 50px;
-        left: 320px;
-        width: 50px;
-        height: 50px;
+        bottom: 50px;
+        left: 20px;
+        width: 30px;
+        height: 30px;
         border-radius: 50%;
         border: 1px solid #ccc;
+        text-align: center;
         cursor: pointer;
+        background-color: yellow;
         display: none;
       }
 
@@ -65,12 +77,6 @@
         width: 100%;
       }
 
-      #menu {
-        position: absolute;
-        background: #efefef;
-        padding: 10px;
-        font-family: "Open Sans", sans-serif;
-      }
     </style>
     <script>
       $(function () {
@@ -78,11 +84,15 @@
         var dialog = $(".dialog");
         var icon = $(".dialog-icon");
         //Jconsole.log("initiated" + dialog.html() + icon.html());
-        $("#apply").click(() => {
+        dialog.on("focusout", () => {
           console.log("dialog losing focus");
           dialog.hide();
           icon.show();
-          setMap();
+        });
+        $("#close").click(() => {
+          console.log("dialog losing focus");
+          dialog.hide();
+          icon.show();
         });
 
         icon.click(function (e) {
@@ -122,32 +132,22 @@
             }
           });
         });
-        //$("#language")
-        //  .find("input")
-        //  .forEach((lang) => {
-        //    lang.onClick = (e) => {
-        //      label_lang = e.target.id;
-        //      console.log(label_lang);
-        //      const layers = map.getStyle().layers;
-        //      layers.forEach((layer) => {
-        //        if (layer.type === "symbol" && layer.layout["text-field"]) {
-        //          map.setLayoutProperty(layer.id, "text-field", [
-        //            "get",
-        //            `name_${language}`,
-        //          ]);
-        //        }
-        //      });
-        //    };
-        //  });
-        //const layerList = document.getElementById("menu");
-        //const inputs = layerList.getElementsByTagName("input");
-
-        //for (const input of inputs) {
-        //  input.onclick = (e) => {
-        //    const layerId = e.target.id;
-        //    map.setStyle("mapbox://styles/mapbox/" + layerId);
-        //  };
-        //}
+        $("#background").change( e => {
+          const layerId = e.target.id;
+          map.setStyle("mapbox://styles/mapbox/"+layerId);
+        });
+        $("#geocoding").change( e => {
+          const sel = $(e.target).is(":checked");
+          console.log(sel);
+          if (sel) { map.addControl(geocoder, "top-right")}
+          else { map.removeControl(geocoder)};
+        });
+        $("#directionControl").change( e => {
+          const sel = $(e.target).is(":checked");
+          console.log(sel);
+          if (sel) { map.addControl(directions, "bottom-right")}
+          else { map.removeControl(directions)};
+        });
 
         const params = document.getElementById("params");
         const urlBase = "https://api.mapbox.com/isochrone/v1/mapbox/";
@@ -220,18 +220,7 @@
           mapboxgl: mapboxgl,
         });
 
-        var bGeocoding = $("#geocoding").is(":checked");
-        console.log(bGeocoding);
-        if (bGeocoding === true) {
-          map.addControl(geocoder, "top-right");
-        } else if (map.hasControl(geocoder)) {
-          console.log("removing geocoder");
-          map.removeControl(geocoder);
-        }
-        map.addControl(
-          new MapboxDirections({ accessToken: mapboxgl.accessToken }),
-          "bottom-right"
-        );
+        const directions = new MapboxDirections({ accessToken: mapboxgl.accessToken });
       }
     </script>
   </head>
@@ -284,13 +273,31 @@
           <input id="es" type="radio" name="rtoggle" />
           <label for="es">Spanish</label>
         </div>
+        <hr />
+        <div id="background">
+          <input
+            id="satellite-v9"
+            type="radio"
+            name="rtoggle"
+            checked="checked"
+          />
+          <label for="satellite-v9">satellite</label>
+          <input id="light-v10" type="radio" name="rtoggle" />
+          <label for="light-v10">light</label>
+          <input id="dark-v10" type="radio" name="rtoggle" />
+          <label for="dark-v10">dark</label>
+          <input id="streets-v11" type="radio" name="rtoggle" />
+          <label for="streets-v11">streets</label>
+          <input id="outdoors-v11" type="radio" name="rtoggle" />
+          <label for="outdoors-v11">outdoors</label>
+        </div>
+        <hr />
         <div>
-          <input type="checkbox" id="geocoding" /><label for="geocoding"
-            >Geo Coding</label
-          >
+          <input type="checkbox" id="geocoding" /><label for="geocoding" >Geo Coding</label >
+          <input type = 'checkbox' id = 'directionControl' /><label for 'directionControl'>Directions</label>
         </div>
       </div>
-      <button id="apply">Apply</button>
+      <div class="container"><button id="close">CLOSE</button></div>
     </div>
     <div class="dialog-icon">
       <i class="fa fa-comments">i</i>
