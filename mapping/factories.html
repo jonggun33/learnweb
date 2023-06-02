@@ -27,6 +27,32 @@
     />
 
     <style>
+      .dialog {
+        position: fixed;
+        top: 50px;
+        left: 20px;
+        width: 300px;
+        height: 200px;
+        border: 1px solid #ccc;
+        z-index: 9999;
+      }
+
+      .dialog-content {
+        padding: 20px;
+      }
+
+      .dialog-icon {
+        position: fixed;
+        top: 50px;
+        left: 320px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        display: none;
+      }
+
       body {
         margin: 0;
         padding: 0;
@@ -70,6 +96,21 @@
     <script>
       $(function () {
         setMap();
+        var dialog = $(".dialog");
+        var icon = $(".dialog-icon");
+        console.log("initiated" + dialog.html() + icon.html());
+        dialog.on("focusout", () => {
+          console.log("dialog losing focus");
+          dialog.hide();
+          icon.show();
+        });
+
+        icon.click(function (e) {
+          console.log("icon clicked");
+          icon.hide();
+          dialog.show();
+          dialog.focus();
+        });
       });
       function setMap() {
         mapboxgl.accessToken =
@@ -89,24 +130,15 @@
         });
         $("#buttons").click(function (e) {
           const language = e.target.id.substr("button-".length);
-          // Use setLayoutProperty to set the value of a layout property in a style layer.
-          // The three arguments are the id of the layer, the name of the layout property,
-          // and the new property value.
-          // Assuming you have a Mapbox GL JS map object named 'map'
 
-          // Get the list of layers
           const layers = map.getStyle().layers;
-
-          // Iterate over the layers
           layers.forEach((layer) => {
             console.log(layer.id);
-            // Check if the layer is a label layer (adjust the condition as per your use case)
             if (layer.type === "symbol" && layer.layout["text-field"]) {
-              // Update the 'text-field' property to change the language
               map.setLayoutProperty(layer.id, "text-field", [
                 "get",
                 `name_${language}`,
-              ]); // 'name_fr' represents the French label field
+              ]);
             }
           });
         });
@@ -153,7 +185,6 @@
         });
 
         map.on("load", () => {
-          // When the map loads, add the source and layer
           map.addSource("iso", {
             type: "geojson",
             data: {
@@ -176,7 +207,6 @@
             "poi-label"
           );
 
-          // Initialize the marker at the query coordinates
           marker.setLngLat(lngLat).addTo(map);
           marker.on("dragend", function (e) {
             //coordinates.innerHTML = `Longitude: ${lngLat.lng}<br />Latitude: ${lngLat.lat}`;
@@ -186,7 +216,6 @@
             getIso();
           });
 
-          // Make the API call
           getIso();
         });
         const geocoder = new MapboxGeocoder({
@@ -264,6 +293,15 @@
           </label>
         </div>
       </form>
+    </div>
+    <div class="dialog" id="gg">
+      <div class="dialog-content">
+        <h3>Hello</h3>
+        <input type="text" />
+      </div>
+    </div>
+    <div class="dialog-icon">
+      <i class="fa fa-comments">icon</i>
     </div>
   </body>
 </html>
