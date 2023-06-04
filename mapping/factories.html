@@ -25,6 +25,12 @@
       href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css"
       type="text/css"
     />
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.0/mapbox-gl-draw.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.0/mapbox-gl-draw.css"
+      type="text/css"
+    />
 
     <style>
       button {
@@ -76,7 +82,6 @@
         bottom: 0;
         width: 100%;
       }
-
     </style>
     <script>
       $(function () {
@@ -132,21 +137,27 @@
             }
           });
         });
-        $("#background").change( e => {
+        $("#background").change((e) => {
           const layerId = e.target.id;
-          map.setStyle("mapbox://styles/mapbox/"+layerId);
+          map.setStyle("mapbox://styles/mapbox/" + layerId);
         });
-        $("#geocoding").change( e => {
+        $("#geocoding").change((e) => {
           const sel = $(e.target).is(":checked");
           console.log(sel);
-          if (sel) { map.addControl(geocoder, "top-right")}
-          else { map.removeControl(geocoder)};
+          if (sel) {
+            map.addControl(geocoder, "top-right");
+          } else {
+            map.removeControl(geocoder);
+          }
         });
-        $("#directionControl").change( e => {
+        $("#directionControl").change((e) => {
           const sel = $(e.target).is(":checked");
           console.log(sel);
-          if (sel) { map.addControl(directions, "bottom-right")}
-          else { map.removeControl(directions)};
+          if (sel) {
+            map.addControl(directions, "bottom-right");
+          } else {
+            map.removeControl(directions);
+          }
         });
 
         const params = document.getElementById("params");
@@ -214,13 +225,60 @@
           });
 
           getIso();
+          map.addSource("drawn-points", {
+            type: "geojson",
+            data: {
+              type: "FeatureCollection",
+              features: [],
+            },
+          });
+
+          map.addLayer({
+            id: "drawn-points-layer",
+            type: "circle",
+            source: "drawn-points",
+            paint: {
+              "circle-radius": 6,
+              "circle-color": "#FF0000",
+            },
+          });
         });
         const geocoder = new MapboxGeocoder({
           accessToken: mapboxgl.accessToken,
           mapboxgl: mapboxgl,
         });
 
-        const directions = new MapboxDirections({ accessToken: mapboxgl.accessToken });
+        const directions = new MapboxDirections({
+          accessToken: mapboxgl.accessToken,
+        });
+        const draw = new MapboxDraw({
+          displayControlsDefault: false,
+          controls: {
+            line_string: true,
+            point: true,
+            trash: true,
+          },
+        });
+        map.addControl(draw);
+        map.on("draw.create", (e) => {
+          console.log("creating a point");
+          var feature = e.features[0];
+          var coordinates = feature.geometry.coordinates;
+          var popup = new mapboxgl.Popup()
+            .setLngLat(coordinates)
+            .setHTML(
+              '<input type="text" id="attributeInput" placeholder="Enter attribute">'
+            )
+            .addTo(map);
+          popup.on("close", (e) => {
+            var attribute = $("#attributeInput").value;
+            feature.properties.attribute = attribute;
+
+            // Update the feature in the data source
+            var source = map.getSource("drawn-points");
+            source.setData(feature);
+          });
+        });
       }
     </script>
   </head>
@@ -293,8 +351,13 @@
         </div>
         <hr />
         <div>
-          <input type="checkbox" id="geocoding" /><label for="geocoding" >Geo Coding</label >
-          <input type = 'checkbox' id = 'directionControl' /><label for 'directionControl'>Directions</label>
+          <input type="checkbox" id="geocoding" /><label for="geocoding"
+            >Geo Coding</label
+          >
+          <input type="checkbox" id="directionControl" /><label
+            for="directionControl"
+            >Directions</label
+          >
         </div>
       </div>
       <div class="container"><button id="close">CLOSE</button></div>
