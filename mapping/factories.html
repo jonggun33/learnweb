@@ -243,18 +243,18 @@
             },
           });
           map.addLayer({
-                'id': 'labels',
-                'type': 'symbol',
-                'source': 'drawn-points',
-                'layout': {
-                    'text-field': ['get', 'name'],
-                    'text-font': ['Open Sans Regular'],
-                    'text-size': 24
-                },
-                'paint': {
-                    'text-color': '#880000'
-                }
-            });
+            id: "labels",
+            type: "symbol",
+            source: "drawn-points",
+            layout: {
+              "text-field": ["get", "name"],
+              "text-font": ["Open Sans Regular"],
+              "text-size": 24,
+            },
+            paint: {
+              "text-color": "#880000",
+            },
+          });
         });
         const geocoder = new MapboxGeocoder({
           accessToken: mapboxgl.accessToken,
@@ -277,26 +277,32 @@
           console.log("creating a point");
           var feature = e.features[0];
           var coordinates = feature.geometry.coordinates;
-//          setTimeout(() => {
-//            var popup = new mapboxgl.Popup()
-//              .setLngLat(coordinates)
-//              .setHTML(
-//                '<input type="text" id="attributeInput" placeholder="Enter attribute">'
-//              )
-//              .addTo(map);
-//            popup.on("close", (e) => {
-//              var attribute = 'attribute';
-//              console.log(attribute);
-//              feature.properties.attribute = attribute;
-//              var source = map.getSource("drawn-points");
-//              source.setData(feature);
-//              console.log(source);
-//            });
-//          }, 100);
-        var name = prompt('Name:');
-        feature.properties.name = name;
-        var source = map.getSource('drawn-points');
-        source.setData(feature);
+          //          setTimeout(() => {
+          //            var popup = new mapboxgl.Popup()
+          //              .setLngLat(coordinates)
+          //              .setHTML(
+          //                '<input type="text" id="attributeInput" placeholder="Enter attribute">'
+          //              )
+          //              .addTo(map);
+          //            popup.on("close", (e) => {
+          //              var attribute = 'attribute';
+          //              console.log(attribute);
+          //              feature.properties.attribute = attribute;
+          //              var source = map.getSource("drawn-points");
+          //              source.setData(feature);
+          //              console.log(source);
+          //            });
+          //          }, 100);
+          var name = prompt("Name:");
+          feature.properties.name = name;
+          var source = map.getSource("drawn-points");
+          var existingGeoJSONData = source._data;
+          var mergedGeoJSONData = {
+            type: "FeatureCollection",
+            features: existingGeoJSONData.features.concat(feature),
+          };
+
+          source.setData(mergedGeoJSONData);
         });
       }
     </script>
