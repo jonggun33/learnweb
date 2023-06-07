@@ -308,7 +308,10 @@
         map.on("click", "drawn-points-layer", (e) => {
           if (!bDrawRoute) return;
           console.log('drawing route');
-          var clickedFeature = e.features[0];
+           var pointFeatures = map.queryRenderedFeatures(e.point, {
+    layers: ['drawn-points-layer'] // Specify the layer(s) for point features
+  });
+          var clickedFeature = pointFeatures[0];
           // Get the clicked feature's coordinates
           var coordinates = clickedFeature.geometry.coordinates;
           selectedPoints.push(coordinates);
