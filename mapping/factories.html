@@ -159,6 +159,16 @@
             map.removeControl(directions);
           }
         });
+        var selectedPoints = [];
+        var bDrawRoute = false;
+        $("#drawroute").change((e) => {
+          bDrawRoute = $(e.target).is(":checked");
+          console.log(bDrawRoute);
+          if (bDrawRoute) {
+          } else {
+            selectedPoints = [];
+          }
+        });
 
         const params = document.getElementById("params");
         const urlBase = "https://api.mapbox.com/isochrone/v1/mapbox/";
@@ -223,7 +233,6 @@
             console.log(lng, lat);
             getIso();
           });
-
           getIso();
           map.addSource("drawn-points", {
             type: "geojson",
@@ -255,6 +264,15 @@
               "text-color": "#880000",
             },
           });
+          map.addLayer({
+            id: "lines",
+            type: "line",
+            source: "drawn-points",
+            paint: {
+              "line-color": "red",
+              "line-width": 2,
+            },
+          });
         });
         const geocoder = new MapboxGeocoder({
           accessToken: mapboxgl.accessToken,
@@ -277,22 +295,6 @@
           console.log("creating a point");
           var feature = e.features[0];
           var coordinates = feature.geometry.coordinates;
-          //          setTimeout(() => {
-          //            var popup = new mapboxgl.Popup()
-          //              .setLngLat(coordinates)
-          //              .setHTML(
-          //                '<input type="text" id="attributeInput" placeholder="Enter attribute">'
-          //              )
-          //              .addTo(map);
-          //            popup.on("close", (e) => {
-          //              var attribute = 'attribute';
-          //              console.log(attribute);
-          //              feature.properties.attribute = attribute;
-          //              var source = map.getSource("drawn-points");
-          //              source.setData(feature);
-          //              console.log(source);
-          //            });
-          //          }, 100);
           var name = prompt("Name:");
           feature.properties.name = name;
           var source = map.getSource("drawn-points");
@@ -301,7 +303,32 @@
             type: "FeatureCollection",
             features: existingGeoJSONData.features.concat(feature),
           };
+          source.setData(mergedGeoJSONData);
+        });
+        map.on("click", "drawn-points-layer", (e) => {
+          if (!bDrawRoute) return;
+          console.log('drawing route');
+          var clickedFeature = e.features[0];
+          // Get the clicked feature's coordinates
+          var coordinates = clickedFeature.geometry.coordinates;
+          selectedPoints.push(coordinates);
+          console.log(selectedPoints);
 
+          // Create a LineString feature using the selectedPoints array
+          var lineStringFeature = {
+            type: "Feature",
+            geometry: {
+              type: "LineString",
+              coordinates: selectedPoints,
+            },
+            properties: {}, // Add any additional properties as needed
+          };
+          var source = map.getSource("drawn-points");
+          var existingGeoJSONData = source._data;
+          var mergedGeoJSONData = {
+            type: "FeatureCollection",
+            features: existingGeoJSONData.features.concat(lineStringFeature),
+          };
           source.setData(mergedGeoJSONData);
         });
       }
@@ -384,6 +411,11 @@
             >Directions</label
           >
         </div>
+      </div>
+      <div>
+        <input type="checkbox" , id="drawroute" /><label for="drawroute"
+          >Draw Route</label
+        >
       </div>
       <div class="container"><button id="close">CLOSE</button></div>
     </div>
