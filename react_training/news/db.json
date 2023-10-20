@@ -1,0 +1,84 @@
+{
+  "articles": [
+    {
+      "author": null,
+      "type": "IT",
+      "typeCode": "IT",
+      "description": "aaaa",
+      "url": "https://n.news.naver.com/article/023/0003794431?cds=news_media_pc",
+      "urlToImage": "https://imgnews.pstatic.net/image/023/2023/10/20/0003794431_001_20231020101201046.jpg?type=w647"
+    },
+    {
+      "author": null,
+      "type": "IT",
+      "typeCode": "IT",
+      "description": "aaaa",
+      "url": "https://n.news.naver.com/article/023/0003794442?cds=news_media_pc",
+      "urlToImage": "https://imgnews.pstatic.net/image/023/2023/10/20/0003794442_001_20231020103308074.jpg?type=w647"
+    },
+    {
+      "author": null,
+      "type": "IT",
+      "typeCode": "IT",
+      "description": "aaaa",
+      "url": "https://n.news.naver.com/article/052/0001949380?cds=news_media_pc",
+      "urlToImage": "https://mimgnews.pstatic.net/image/origin/052/2023/10/20/1949356.jpg?type=nf190_130&ut=1697758501000"
+    },
+    {
+      "author": null,
+      "type": "SPORT",
+      "typeCode": "SPORT",
+      "description": "aaaa",
+      "url": "https://n.news.naver.com/article/023/0003794439?cds=news_media_pc",
+      "urlToImage": "https://imgnews.pstatic.net/image/023/2023/10/20/0003794439_001_20231020101903695.jpg?type=w647"
+    },
+    {
+      "author": null,
+      "type": "SOCIAL",
+      "typeCode": "SOCIAL",
+      "description": "aaaa",
+      "url": "https://n.news.naver.com/mnews/article/003/0012158406?sid=105",
+      "urlToImage": "https://imgnews.pstatic.net/image/003/2023/10/20/NISI20230423_0019863589_web_20230423220806_20231020102512964.jpg?type=w647"
+    },
+    {
+      "author": null,
+      "type": "SOCIAL",
+      "typeCode": "SOCIAL",
+      "description": "aaaa",
+      "url": "https://n.news.naver.com/mnews/article/011/0004251321?sid=105",
+      "urlToImage": "https://imgnews.pstatic.net/image/011/2023/10/20/0004251321_001_20231020102201020.jpg?type=w647"
+    },
+    {
+      "author": null,
+      "type": "SOCIAL",
+      "typeCode": "SOCIAL",
+      "description": "",
+      "url": "https://n.news.naver.com/mnews/hotissue/article/008/0004950627?type=series&cid=1088738",
+      "urlToImage": "https://mimgnews.pstatic.net/image/origin/008/2023/10/20/4951227.jpg?type=nf190_130&ut=1697749200000"
+    },
+    {
+      "author": null,
+      "type": "ENTERTAINMENT",
+      "typeCode": "ENTERTAINMENT",
+      "description": "aaaa",
+      "url": "https://n.news.naver.com/mnews/article/293/0000048326?sid=105",
+      "urlToImage": "https://imgnews.pstatic.net/image/293/2023/10/20/0000048326_001_20231020105001343.jpg?type=w647"
+    },
+    {
+      "author": null,
+      "type": "ENTERTAINMENT",
+      "typeCode": "POLITICS",
+      "description": "aaaa",
+      "url": "https://n.news.naver.com/mnews/article/092/0002308528?sid=105",
+      "urlToImage": "https://imgnews.pstatic.net/image/092/2023/10/20/0002308528_001_20231020093901182.jpg?type=w647"
+    },
+    {
+      "author": null,
+      "type": "IT",
+      "typeCode": "IT",
+      "description": "aaaa",
+      "url": "https://n.news.naver.com/mnews/article/028/0002661095?sid=105",
+      "urlToImage": "https://imgnews.pstatic.net/image/028/2023/10/20/0002661095_001_20231020094508878.jpg?type=w647"
+    }
+  ]
+}
