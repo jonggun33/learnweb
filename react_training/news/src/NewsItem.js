@@ -1,24 +1,21 @@
-import React, { Component } from "react";
+import React  from "react";
 
-export default class NewsItem extends Component {
-  render() {
-    const {article} = this.props;
-    return (
-      <>
-        <li className="list_group-item">
-          <div className="media">
-            {article.urlToImage && (
-              <img src={article.urlToImage} className="w-25 p-2" />
-            )}
-          </div>
-          <div className="media-body p-2">
-            <h5 className="mt-0">
-              <a href={article.url}> {article.title} </a>
-            </h5>
-            {article.description}
-          </div>
-        </li>
-      </>
-    );
-  }
+export default function NewsItem({ article }) {
+  return (
+    <>
+      <li className="list_group-item">
+        <div className="media">
+          {article.urlToImage && (
+            <img src={article.urlToImage} className="w-25 p-2" />
+          )}
+        </div>
+        <div className="media-body p-2">
+          <h5 className="mt-0">
+            <a href={article.url}> {article.title} </a>
+          </h5>
+          {article.description}
+        </div>
+      </li>
+    </>
+  );
 }
