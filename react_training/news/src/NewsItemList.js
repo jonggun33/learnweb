@@ -12,6 +12,14 @@ export default class NewsItemList extends Component {
   componentDidMount() {
     this.getTopHeadlines();
   }
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.term != this.props.term){
+    this.getTermSearchNews(this.props.term);
+    }
+    //prevPros: 
+    //prevState: compare with previous state to prevent infinite loop
+
+  }
   getTopHeadlines = () => {
     axios.get("http://localhost:3004/articles")
     .then(response => {
@@ -20,6 +28,15 @@ export default class NewsItemList extends Component {
         articles:response.data});
     })
   }
+  getTermSearchNews = (term) => {
+    axios.get(`http://localhost:3004/articles?q=${term}`)
+    .then(response => {
+      console.log(response);
+      this.setState({
+        articles:response.data});
+    })
+  }
+
   render() {
     return (
       <>
