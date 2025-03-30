@@ -6,30 +6,26 @@
     <div class="card card-default card-borderless">
       <div class="card-body">
         <InputTodo @add-todo="addTodo"> </InputTodo>
-        <TodoList
-          :todoList="state.todoList"
-          @delete-todo="removeTodo"
-          @toggle-completed="toggleTodo"
-        ></TodoList>
+        <TodoList :todoList="state.todoList" @delete-todo="removeTodo" @toggle-completed="toggleTodo"></TodoList>
       </div>
     </div>
   </div>
 </template>
 
-<script setup >
+<script setup>
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {reactive, onMounted} from 'vue';
+import { reactive, onMounted } from 'vue';
 import InputTodo from './InputTodo.vue';
 import TodoList from './TodoList.vue';
 
 const ts = new Date().getTime();
-const state = reactive({todoList: []});
+const state = reactive({ todoList: [] });
 onMounted(() => {
-  state.todoList.push({id: ts, todo: 'Vue.js 공부하기', completed: false});
-  state.todoList.push({id: ts + 1, todo: 'Vue.js 복습하기', completed: false});
-  state.todoList.push({id: ts + 2, todo: 'Vue.js 복습하기', completed: false});
-  state.todoList.push({id: ts + 3, todo: 'Vue.js 복습하기', completed: false});
-  state.todoList.push({id: ts + 4, todo: 'Vue.js 복습하기', completed: false});
+  state.todoList.push({ id: ts, todo: 'Vue.js 공부하기', completed: false });
+  state.todoList.push({ id: ts + 1, todo: 'Vue.js 복습하기', completed: false });
+  state.todoList.push({ id: ts + 2, todo: 'Vue.js 복습하기', completed: false });
+  state.todoList.push({ id: ts + 3, todo: 'Vue.js 복습하기', completed: false });
+  state.todoList.push({ id: ts + 4, todo: 'Vue.js 복습하기', completed: false });
 })
 const addTodo = (todo) => {
   const ts = new Date().getTime();
@@ -48,4 +44,3 @@ const toggleTodo = (id) => {
   }
 };
 </script>
-

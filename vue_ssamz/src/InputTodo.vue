@@ -1,7 +1,8 @@
 <template>
-    <div class ="row mb-3">
+    <div class="row mb-3">
         <div class="col">
-            <input id="msg" type="text" class="form-control" placeholder="할 일을 입력하세요." v-model.trim="msg" @keyup.enter="addTodoHandler" />
+            <input id="msg" type="text" class="form-control" placeholder="할 일을 입력하세요." v-model.trim="msg"
+                @keyup.enter="addTodoHandler" />
             <span class="btn btn-primary input-group-addon" @click="addTodoHandler">ADD</span>
         </div>
     </div>
@@ -18,5 +19,4 @@ const addTodoHandler = () => {
     emit('add-todo', msg.value);
     msg.value = '';
 };
-
 </script>
