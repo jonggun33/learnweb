@@ -8,8 +8,8 @@
         <InputTodo @add-todo="addTodo"> </InputTodo>
         <TodoList
           :todoList="state.todoList"
-          @remove-todo="removeTodo"
-          @toggle-todo="toggleTodo"
+          @delete-todo="removeTodo"
+          @toggle-completed="toggleTodo"
         ></TodoList>
       </div>
     </div>
