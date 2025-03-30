@@ -1,85 +1,51 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+  <div class="container">
+    <div class="card card-body bg-light">
+      <div class="title">:: To do List</div>
     </div>
-  </header>
-
-  <RouterView />
+    <div class="card card-default card-borderless">
+      <div class="card-body">
+        <InputTodo @add-todo="addTodo"> </InputTodo>
+        <TodoList
+          :todoList="state.todoList"
+          @remove-todo="removeTodo"
+          @toggle-todo="toggleTodo"
+        ></TodoList>
+      </div>
+    </div>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
+<script setup >
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {reactive, onMounted} from 'vue';
+import InputTodo from './InputTodo.vue';
+import TodoList from './TodoList.vue';
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+const ts = new Date().getTime();
+const state = reactive({todoList: []});
+onMounted(() => {
+  state.todoList.push({id: ts, todo: 'Vue.js 공부하기', completed: false});
+  state.todoList.push({id: ts + 1, todo: 'Vue.js 복습하기', completed: false});
+  state.todoList.push({id: ts + 2, todo: 'Vue.js 복습하기', completed: false});
+  state.todoList.push({id: ts + 3, todo: 'Vue.js 복습하기', completed: false});
+  state.todoList.push({id: ts + 4, todo: 'Vue.js 복습하기', completed: false});
+})
+const addTodo = (todo) => {
+  const ts = new Date().getTime();
+  state.todoList.push({ id: ts, todo, completed: false });
+};
+const removeTodo = (id) => {
+  const index = state.todoList.findIndex((todo) => todo.id === id);
+  if (index !== -1) {
+    state.todoList.splice(index, 1);
   }
-
-  .logo {
-    margin: 0 2rem 0 0;
+};
+const toggleTodo = (id) => {
+  const index = state.todoList.findIndex((todo) => todo.id === id);
+  if (index !== -1) {
+    state.todoList[index].completed = !state.todoList[index].completed;
   }
+};
+</script>
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
-</style>
